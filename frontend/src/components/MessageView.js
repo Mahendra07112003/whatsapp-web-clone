@@ -21,8 +21,18 @@ export default function MessageView({ wa_id, name, onBack }) {
 
     // Fetch messages for the selected chat
     getMessages(wa_id)
-      .then(res => setMessages(res.data))
-      .catch(err => console.error('Error fetching messages:', err));
+      .then(res => {
+        const data = Array.isArray(res?.data)
+          ? res.data
+          : Array.isArray(res?.data?.data)
+          ? res.data.data
+          : [];
+        setMessages(data);
+      })
+      .catch(err => {
+        console.error('Error fetching messages:', err);
+        setMessages([]);
+      });
   }, [wa_id]);
 
   // Light polling to refresh statuses/timestamps periodically
@@ -30,7 +40,14 @@ export default function MessageView({ wa_id, name, onBack }) {
     if (!wa_id) return;
     const intervalId = setInterval(() => {
       getMessages(wa_id)
-        .then(res => setMessages(res.data))
+        .then(res => {
+          const data = Array.isArray(res?.data)
+            ? res.data
+            : Array.isArray(res?.data?.data)
+            ? res.data.data
+            : [];
+          setMessages(data);
+        })
         .catch(() => {});
     }, 4000);
     return () => clearInterval(intervalId);

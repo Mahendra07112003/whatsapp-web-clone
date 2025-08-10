@@ -7,8 +7,18 @@ export default function ChatList({ onSelect }) {
   useEffect(() => {
     // Fetch chats when component mounts
     getChats()
-      .then(res => setChats(res.data))
-      .catch(err => console.error('Error fetching chats:', err));
+      .then(res => {
+        const data = Array.isArray(res?.data)
+          ? res.data
+          : Array.isArray(res?.data?.data)
+          ? res.data.data
+          : [];
+        setChats(data);
+      })
+      .catch(err => {
+        console.error('Error fetching chats:', err);
+        setChats([]);
+      });
   }, []);
 
   return (
@@ -18,7 +28,7 @@ export default function ChatList({ onSelect }) {
         {chats.length === 0 && (
           <div style={{ padding: 12, color: '#667781' }}>No chats found.</div>
         )}
-        {chats.map((chat) => (
+        {Array.isArray(chats) && chats.map((chat) => (
           <div
             key={chat.wa_id}
             className="wa-chat-item"
