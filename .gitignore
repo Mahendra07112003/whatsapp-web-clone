@@ -1,5 +1,26 @@
-# .gitignore
+# Node
 node_modules/
-backend/node_modules/
-frontend/node_modules/
+**/node_modules/
+
+# Env (never commit secrets)
 .env
+**/.env
+
+# Build artifacts
+frontend/build/
+frontend/dist/
+backend/dist/
+
+# Logs/coverage
+*.log
+logs/
+coverage/
+
+# OS/IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Project-specific
+backend/payloads/
