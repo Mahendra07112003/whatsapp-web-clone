@@ -1,3 +1,7 @@
+
+## Live Demo
+https://whatsapp-web-clone-indol.vercel.app/
+
 ## WhatsApp Web Clone (Demo)
 
 A WhatsApp web–style chat viewer built with Node/Express + MongoDB and React. It ingests webhook-like JSON payloads, stores messages, aggregates chats by contact, shows timestamps and delivery status, and lets you send messages (DB only, no external WhatsApp API).
